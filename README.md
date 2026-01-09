@@ -2,8 +2,10 @@
 
 Modern Python wrapper for [tls-client](https://github.com/bogdanfinn/tls-client) with an httpx-like API and browser TLS fingerprinting.
 
+[![PyPI version](https://img.shields.io/pypi/v/tlshttp.svg)](https://pypi.org/project/tlshttp/)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Downloads](https://img.shields.io/pypi/dm/tlshttp.svg)](https://pypi.org/project/tlshttp/)
 
 ## Features
 
