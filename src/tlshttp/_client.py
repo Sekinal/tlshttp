@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import base64
 import functools
 import json
 import logging
@@ -128,6 +129,7 @@ class Client:
         params: dict[str, str] | None = None,
         headers: dict[str, str] | Headers | None = None,
         cookies: dict[str, str] | Cookies | None = None,
+        auth: tuple[str, str] | None = None,
         timeout: float | Timeout | None = None,
         follow_redirects: bool | None = None,
     ) -> Response:
@@ -142,6 +144,7 @@ class Client:
             params: URL query parameters.
             headers: Request headers (merged with defaults).
             cookies: Request cookies (merged with defaults).
+            auth: Basic auth credentials as (username, password) tuple.
             timeout: Request timeout (overrides default).
             follow_redirects: Whether to follow redirects (overrides default).
 
@@ -162,6 +165,12 @@ class Client:
 
         # Merge headers
         request_headers = merge_headers(self._headers, headers)
+
+        # Add Basic auth header if provided
+        if auth is not None:
+            username, password = auth
+            credentials = base64.b64encode(f"{username}:{password}".encode()).decode()
+            request_headers["Authorization"] = f"Basic {credentials}"
 
         # Merge cookies
         request_cookies = merge_cookies(self._cookies, cookies)
@@ -264,6 +273,7 @@ class Client:
         params: dict[str, str] | None = None,
         headers: dict[str, str] | Headers | None = None,
         cookies: dict[str, str] | Cookies | None = None,
+        auth: tuple[str, str] | None = None,
         timeout: float | Timeout | None = None,
         follow_redirects: bool | None = None,
     ) -> Response:
@@ -274,6 +284,7 @@ class Client:
             params=params,
             headers=headers,
             cookies=cookies,
+            auth=auth,
             timeout=timeout,
             follow_redirects=follow_redirects,
         )
@@ -288,6 +299,7 @@ class Client:
         params: dict[str, str] | None = None,
         headers: dict[str, str] | Headers | None = None,
         cookies: dict[str, str] | Cookies | None = None,
+        auth: tuple[str, str] | None = None,
         timeout: float | Timeout | None = None,
         follow_redirects: bool | None = None,
     ) -> Response:
@@ -301,6 +313,7 @@ class Client:
             params=params,
             headers=headers,
             cookies=cookies,
+            auth=auth,
             timeout=timeout,
             follow_redirects=follow_redirects,
         )
@@ -315,6 +328,7 @@ class Client:
         params: dict[str, str] | None = None,
         headers: dict[str, str] | Headers | None = None,
         cookies: dict[str, str] | Cookies | None = None,
+        auth: tuple[str, str] | None = None,
         timeout: float | Timeout | None = None,
         follow_redirects: bool | None = None,
     ) -> Response:
@@ -328,6 +342,7 @@ class Client:
             params=params,
             headers=headers,
             cookies=cookies,
+            auth=auth,
             timeout=timeout,
             follow_redirects=follow_redirects,
         )
@@ -342,6 +357,7 @@ class Client:
         params: dict[str, str] | None = None,
         headers: dict[str, str] | Headers | None = None,
         cookies: dict[str, str] | Cookies | None = None,
+        auth: tuple[str, str] | None = None,
         timeout: float | Timeout | None = None,
         follow_redirects: bool | None = None,
     ) -> Response:
@@ -355,6 +371,7 @@ class Client:
             params=params,
             headers=headers,
             cookies=cookies,
+            auth=auth,
             timeout=timeout,
             follow_redirects=follow_redirects,
         )
@@ -366,6 +383,7 @@ class Client:
         params: dict[str, str] | None = None,
         headers: dict[str, str] | Headers | None = None,
         cookies: dict[str, str] | Cookies | None = None,
+        auth: tuple[str, str] | None = None,
         timeout: float | Timeout | None = None,
         follow_redirects: bool | None = None,
     ) -> Response:
@@ -376,6 +394,7 @@ class Client:
             params=params,
             headers=headers,
             cookies=cookies,
+            auth=auth,
             timeout=timeout,
             follow_redirects=follow_redirects,
         )
@@ -387,6 +406,7 @@ class Client:
         params: dict[str, str] | None = None,
         headers: dict[str, str] | Headers | None = None,
         cookies: dict[str, str] | Cookies | None = None,
+        auth: tuple[str, str] | None = None,
         timeout: float | Timeout | None = None,
         follow_redirects: bool | None = None,
     ) -> Response:
@@ -397,6 +417,7 @@ class Client:
             params=params,
             headers=headers,
             cookies=cookies,
+            auth=auth,
             timeout=timeout,
             follow_redirects=follow_redirects,
         )
@@ -408,6 +429,7 @@ class Client:
         params: dict[str, str] | None = None,
         headers: dict[str, str] | Headers | None = None,
         cookies: dict[str, str] | Cookies | None = None,
+        auth: tuple[str, str] | None = None,
         timeout: float | Timeout | None = None,
         follow_redirects: bool | None = None,
     ) -> Response:
@@ -418,6 +440,7 @@ class Client:
             params=params,
             headers=headers,
             cookies=cookies,
+            auth=auth,
             timeout=timeout,
             follow_redirects=follow_redirects,
         )
@@ -539,6 +562,7 @@ class AsyncClient:
         params: dict[str, str] | None = None,
         headers: dict[str, str] | Headers | None = None,
         cookies: dict[str, str] | Cookies | None = None,
+        auth: tuple[str, str] | None = None,
         timeout: float | Timeout | None = None,
         follow_redirects: bool | None = None,
     ) -> Response:
@@ -553,6 +577,7 @@ class AsyncClient:
             params=params,
             headers=headers,
             cookies=cookies,
+            auth=auth,
             timeout=timeout,
             follow_redirects=follow_redirects,
         )
@@ -564,6 +589,7 @@ class AsyncClient:
         params: dict[str, str] | None = None,
         headers: dict[str, str] | Headers | None = None,
         cookies: dict[str, str] | Cookies | None = None,
+        auth: tuple[str, str] | None = None,
         timeout: float | Timeout | None = None,
         follow_redirects: bool | None = None,
     ) -> Response:
@@ -574,6 +600,7 @@ class AsyncClient:
             params=params,
             headers=headers,
             cookies=cookies,
+            auth=auth,
             timeout=timeout,
             follow_redirects=follow_redirects,
         )
@@ -588,6 +615,7 @@ class AsyncClient:
         params: dict[str, str] | None = None,
         headers: dict[str, str] | Headers | None = None,
         cookies: dict[str, str] | Cookies | None = None,
+        auth: tuple[str, str] | None = None,
         timeout: float | Timeout | None = None,
         follow_redirects: bool | None = None,
     ) -> Response:
@@ -601,6 +629,7 @@ class AsyncClient:
             params=params,
             headers=headers,
             cookies=cookies,
+            auth=auth,
             timeout=timeout,
             follow_redirects=follow_redirects,
         )
@@ -615,6 +644,7 @@ class AsyncClient:
         params: dict[str, str] | None = None,
         headers: dict[str, str] | Headers | None = None,
         cookies: dict[str, str] | Cookies | None = None,
+        auth: tuple[str, str] | None = None,
         timeout: float | Timeout | None = None,
         follow_redirects: bool | None = None,
     ) -> Response:
@@ -628,6 +658,7 @@ class AsyncClient:
             params=params,
             headers=headers,
             cookies=cookies,
+            auth=auth,
             timeout=timeout,
             follow_redirects=follow_redirects,
         )
@@ -642,6 +673,7 @@ class AsyncClient:
         params: dict[str, str] | None = None,
         headers: dict[str, str] | Headers | None = None,
         cookies: dict[str, str] | Cookies | None = None,
+        auth: tuple[str, str] | None = None,
         timeout: float | Timeout | None = None,
         follow_redirects: bool | None = None,
     ) -> Response:
@@ -655,6 +687,7 @@ class AsyncClient:
             params=params,
             headers=headers,
             cookies=cookies,
+            auth=auth,
             timeout=timeout,
             follow_redirects=follow_redirects,
         )
@@ -666,6 +699,7 @@ class AsyncClient:
         params: dict[str, str] | None = None,
         headers: dict[str, str] | Headers | None = None,
         cookies: dict[str, str] | Cookies | None = None,
+        auth: tuple[str, str] | None = None,
         timeout: float | Timeout | None = None,
         follow_redirects: bool | None = None,
     ) -> Response:
@@ -676,6 +710,7 @@ class AsyncClient:
             params=params,
             headers=headers,
             cookies=cookies,
+            auth=auth,
             timeout=timeout,
             follow_redirects=follow_redirects,
         )
@@ -687,6 +722,7 @@ class AsyncClient:
         params: dict[str, str] | None = None,
         headers: dict[str, str] | Headers | None = None,
         cookies: dict[str, str] | Cookies | None = None,
+        auth: tuple[str, str] | None = None,
         timeout: float | Timeout | None = None,
         follow_redirects: bool | None = None,
     ) -> Response:
@@ -697,6 +733,7 @@ class AsyncClient:
             params=params,
             headers=headers,
             cookies=cookies,
+            auth=auth,
             timeout=timeout,
             follow_redirects=follow_redirects,
         )
@@ -708,6 +745,7 @@ class AsyncClient:
         params: dict[str, str] | None = None,
         headers: dict[str, str] | Headers | None = None,
         cookies: dict[str, str] | Cookies | None = None,
+        auth: tuple[str, str] | None = None,
         timeout: float | Timeout | None = None,
         follow_redirects: bool | None = None,
     ) -> Response:
@@ -718,6 +756,7 @@ class AsyncClient:
             params=params,
             headers=headers,
             cookies=cookies,
+            auth=auth,
             timeout=timeout,
             follow_redirects=follow_redirects,
         )

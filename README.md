@@ -194,6 +194,16 @@ response = client.get(
 )
 ```
 
+### Authentication
+
+```python
+# Basic auth - httpx-style tuple
+response = client.get(
+    "https://httpbin.org/basic-auth/user/pass",
+    auth=("user", "pass")
+)
+```
+
 ---
 
 ## Response Object

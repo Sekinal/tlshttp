@@ -67,6 +67,27 @@ class TestSyncRequests:
         data = response.json()
         assert data["form"] == {"username": "john", "password": "secret"}
 
+    def test_basic_auth(self, client):
+        """Basic auth with auth tuple should work."""
+        response = client.get(
+            "https://httpbin.org/basic-auth/testuser/testpass",
+            auth=("testuser", "testpass")
+        )
+
+        assert response.status_code == 200
+        data = response.json()
+        assert data["authenticated"] is True
+        assert data["user"] == "testuser"
+
+    def test_basic_auth_wrong_credentials(self, client):
+        """Basic auth with wrong credentials should return 401."""
+        response = client.get(
+            "https://httpbin.org/basic-auth/testuser/testpass",
+            auth=("wrong", "credentials")
+        )
+
+        assert response.status_code == 401
+
     def test_put_request(self, client):
         """PUT request should work."""
         response = client.put(
