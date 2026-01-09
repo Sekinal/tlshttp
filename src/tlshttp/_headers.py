@@ -61,9 +61,16 @@ class Headers(MutableMapping[str, str]):
 
     def __eq__(self, other: object) -> bool:
         if isinstance(other, Headers):
-            return self._store == other._store
+            # Compare by lowered keys and values only (ignore original key case)
+            self_items = {k: v for k, v in self._store.items()}
+            other_items = {k: v for k, v in other._store.items()}
+            # Only compare the values, not the original keys
+            return {k: v[1] for k, v in self_items.items()} == {k: v[1] for k, v in other_items.items()}
         if isinstance(other, Mapping):
-            return dict(self.items()) == dict(other.items())
+            # Compare case-insensitively
+            self_lower = {k.lower(): v for k, v in self.items()}
+            other_lower = {k.lower(): v for k, v in other.items()}
+            return self_lower == other_lower
         return NotImplemented
 
     def get(self, key: str, default: str | None = None) -> str | None:
@@ -117,13 +124,15 @@ class Headers(MutableMapping[str, str]):
         return iter(v for _, v in self._store.values())
 
     @classmethod
-    def from_go_response(cls, headers: dict[str, list[str]]) -> Headers:
+    def from_go_response(cls, headers: dict[str, list[str]] | None) -> Headers:
         """Create Headers from Go library response format.
 
         The Go library returns headers as dict[str, list[str]],
         where each header can have multiple values.
         """
         result = cls()
+        if headers is None:
+            return result
         for key, values in headers.items():
             # Join multiple values with comma (per HTTP spec)
             result[key] = ", ".join(values)

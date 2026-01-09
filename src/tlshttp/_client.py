@@ -525,7 +525,7 @@ class AsyncClient:
         return await anyio.to_thread.run_sync(
             functools.partial(func, *args, **kwargs),
             limiter=self._limiter,
-            cancellable=True,
+            abandon_on_cancel=True,
         )
 
     async def request(
